@@ -1,5 +1,5 @@
 const fs = require('fs');
-const crypto = require('crypto'); 
+const crypto = require('crypto');
 
 class UsersRepository {
     constructor(filename) {
@@ -25,47 +25,48 @@ class UsersRepository {
 
     }
     async create(attrs) {
-        attrs.id=this.randomId();
+        attrs.id = this.randomId();
         //{email : 'adfadff' , pass: 'pasdaf'}
-        const records= await this.getAll();
+        const records = await this.getAll();
         records.push(attrs);
         await this.writeAll(records);
+        return attrs;
     }
-    async writeAll(records){
-        await fs.promises.writeFile(this.filename,JSON.stringify(records,null,2));
+    async writeAll(records) {
+        await fs.promises.writeFile(this.filename, JSON.stringify(records, null, 2));
     }
 
-    randomId(){
+    randomId() {
         return crypto.randomBytes(4).toString('hex');
     }
-    async getOne(id){
+    async getOne(id) {
         const records = await this.getAll();
-        return records.find(recod => recod.id===id);
+        return records.find(recod => recod.id === id);
     }
-    async delete(id){
+    async delete(id) {
         const records = await this.getAll();
-        const filteredRecords = records.filter(record=> record.id !==id);
+        const filteredRecords = records.filter(record => record.id !== id);
         await this.writeAll(filteredRecords);
     }
-    async update(id,attrs){
+    async update(id, attrs) {
         const records = await this.getAll();
-        const record =  records.find (record=>record.id===id);
-        if(!record){
+        const record = records.find(record => record.id === id);
+        if (!record) {
             throw new Error(`Record with id ${id} not found `);
         }
-        Object.assign(record,attrs);
+        Object.assign(record, attrs);
         await this.writeAll(records);
     }
-    async getOneBy(filters){
+    async getOneBy(filters) {
         const records = await this.getAll();
-        for(let record of records){
+        for (let record of records) {
             let found = true;
-            for(let key in filters){
-                if(record[key]!==filters[key]){
-                    found=false;
+            for (let key in filters) {
+                if (record[key] !== filters[key]) {
+                    found = false;
                 }
             }
-            if(found){
+            if (found) {
                 return record;
             }
         }
