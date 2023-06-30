@@ -8,7 +8,9 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cookieSession({
-    keys: ['lkasld235j']
+    name: 'session',
+    keys: ['lkasld235j'],
+    maxAge: 24 * 60 * 60 * 1000, // Session duration in milliseconds
   })
 );
 
@@ -72,10 +74,13 @@ app.post('/signin', async (req, res) => {
   if (!user) {
     return res.send('Email not found');
   }
+  const validPassword = await usersRepo.comparePasswords(
+    user.password,password
+  );
 
-  if (user.password !== password) {
+  if (!validPassword) {
     return res.send('Invalid password');
-  }
+  } 
 
   req.session.userId = user.id;
 
