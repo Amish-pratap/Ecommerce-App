@@ -1,5 +1,12 @@
 [
-    {
-        "email" : "hello@gmail.com"
-    }
+  {
+    "email": "amish@gmail.com",
+    "password": "b149b0fbcfa1df4b505890bce08272ab0cbd28e3ea6c209a95de16ab0087b573205054014136afc46870e571f02ec83ea96744bdddafe7e9152143447ec0b89d.74ddf51a7253d893",
+    "id": "b731709a"
+  },
+  {
+    "email": "hello@gmail.com",
+    "password": "77bee4e804ea9347c8e40e157cfad3f4242608ad79128b9742602327729ffc79ecacf29147a59c01212561945a7f7c049245509e2fbc7effed2b2b86cd44a04d.0c359594eaa30983",
+    "id": "02672755"
+  }
 ]
